@@ -1,11 +1,11 @@
 {
-    "name": "chalcedonyt/Specification",
+    "name": "chalcedonyt/Laravel5Specification",
     "description": "Implementation of the specification pattern",
     "keywords": [
         "league",
         ":package_name"
     ],
-    "homepage": "https://github.com/chalcedonyt/Specification",
+    "homepage": "https://github.com/chalcedonyt/Laravel5Specifications",
     "license": "MIT",
     "authors": [
         {
