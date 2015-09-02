@@ -9,11 +9,25 @@ abstract class AbstractSpecification implements SpecificationInterface
     /**
      * Checks if given item meets all criteria
      *
-     * @param Item $item
+     * @param mixed $candidate
      *
      * @return bool
      */
-    abstract public function isSatisfiedBy($item);
+    abstract public function isSatisfiedBy($candidate);
+
+    /**
+     * Returns the specifications the candidate does not fulfil
+     *
+     * @param mixed $candidate
+     *
+     * @return SpecificationInterface or null
+     */
+
+    function remainderUnsatisfiedBy( $candidate ){
+        if( !$this -> isSatisfiedBy( $candidate ))
+            return $this;
+        return null;
+    }
 
     /**
      * Creates a new logical AND specification

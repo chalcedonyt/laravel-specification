@@ -4,10 +4,16 @@ namespace Chalcedonyt\Specification;
 /**
  * A logical OR specification
  */
-class OrSpec extends AbstractSpecification
+class OrSpec extends CompositeSpecification
 {
-
+    /**
+     * @var SpecificationInterface $left
+     */
     protected $left;
+
+    /**
+     * @var SpecificationInterface $right
+     */
     protected $right;
 
     /**
@@ -16,22 +22,35 @@ class OrSpec extends AbstractSpecification
      * @param SpecificationInterface $left
      * @param SpecificationInterface $right
      */
-    public function __construct(SpecificationInterface $left, SpecificationInterface $right)
+    public function __construct(SpecificationInterface $left = null, SpecificationInterface $right = null)
     {
-        $this->left = $left;
-        $this->right = $right;
+        if( $left )
+        {
+            $this -> left = $left;
+            $this -> specifications[]= $left;
+        }
+        if( $right )
+        {
+            $this -> right = $right;
+            $this -> specifications[]= $right;
+        }
     }
 
     /**
-     * Returns the evaluation of both wrapped specifications as a logical OR
+     * Returns the evaluation of all wrapped specifications as a logical OR
      *
-     * @param Item $item
+     * @param mixed $candidate
      *
      * @return bool
      */
-    public function isSatisfiedBy($item)
+    public function isSatisfiedBy($candidate)
     {
-        return $this->left->isSatisfiedBy($item) || $this->right->isSatisfiedBy($item);
+        foreach( $this -> specifications as $specification )
+        {
+            if( $specification -> isSatisfiedBy( $candidate ))
+                return true;
+        }
+        return false;
     }
 }
 ?>

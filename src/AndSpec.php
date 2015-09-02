@@ -4,33 +4,52 @@ namespace Chalcedonyt\Specification;
 /**
  * A logical AND specification
  */
-class AndSpec extends AbstractSpecification
+class AndSpec extends CompositeSpecification
 {
-
+    /**
+     * @var SpecificationInterface $left
+     */
     protected $left;
+
+    /**
+     * @var SpecificationInterface $right
+     */
     protected $right;
 
     /**
-     * Creation of a logical AND of two specifications
+     * Creation of a logical AND of unlimited specifications
      *
      * @param SpecificationInterface $left
      * @param SpecificationInterface $right
      */
-    public function __construct(SpecificationInterface $left, SpecificationInterface $right)
+    public function __construct(SpecificationInterface $left = null, SpecificationInterface $right = null)
     {
-        $this->left = $left;
-        $this->right = $right;
+        if( $left )
+        {
+            $this -> left = $left;
+            $this -> specifications[]= $left;
+        }
+        if( $right )
+        {
+            $this -> right = $right;
+            $this -> specifications[]= $right;
+        }
     }
 
     /**
      * Checks if the composite AND of specifications passes
      *
-     * @param Item $item
+     * @param mixed $candidate
      *
      * @return bool
      */
-    public function isSatisfiedBy($item)
+    public function isSatisfiedBy($candidate)
     {
-        return $this->left->isSatisfiedBy($item) && $this->right->isSatisfiedBy($item);
+        foreach( $this -> specifications as $specification )
+        {
+            if( !$specification -> isSatisfiedBy( $candidate ))
+                return false;
+        }
+        return true;
     }
 }
