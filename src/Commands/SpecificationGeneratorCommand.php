@@ -1,4 +1,4 @@
-<?php namespace Chalcedonyt\Laravel5Specification\Commands;
+<?php namespace Chalcedonyt\Specification\Commands;
 
 use Illuminate\Config\Repository as Config;
 use Illuminate\Console\Command;
@@ -82,11 +82,14 @@ class SpecificationGeneratorCommand extends Command
             is_dir($directory) ?: $this->file->makeDirectory($directory, 0755, true);
 
             $create = true;
-            $object_class = $this->ask("[optional] What type should the object passed to isSatisfiedBy be? E.g. \App\User",
+            $object_class = $this->ask("[optional] What type should the candidate passed to isSatisfiedBy be? E.g. \App\User",
                 self::NO_CLASS_SPECIFIED );
-            //App/User -> $user
-            $object_variable = '$object';
+
+            $object_variable = '$candidate';
             if( $object_class != self::NO_CLASS_SPECIFIED ){
+                /**
+                 * Extract the last element of the class after "\", e.g. App\User -> $user    
+                 */
                 $derive_variable_name = function() use ($object_class){
                     $parts = explode("\\", $object_class);
                     return end( $parts );

@@ -7,11 +7,11 @@ interface SpecificationInterface
     /**
      * Whether the object meets the specification
      *
-     * @param mixed $item
+     * @param mixed $candidate
      *
      * @return bool
      */
-    public function isSatisfiedBy( $item );
+    public function isSatisfiedBy( $candidate );
 
     /**
      * Creates a logical AND specification

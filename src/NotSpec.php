@@ -22,12 +22,20 @@ class NotSpec extends AbstractSpecification
     /**
      * Returns the negated result of the wrapped specification
      *
-     * @param Item $item
+     * @param Item $candidate
      *
      * @return bool
      */
-    public function isSatisfiedBy($item)
+    public function isSatisfiedBy($candidate)
     {
-        return !$this->spec->isSatisfiedBy($item);
+        return !$this->spec->isSatisfiedBy($candidate);
+    }
+
+    public function remainderUnsatisfiedBy( $candidate )
+    {
+        if( $this -> spec -> isSatisfiedBy( $candidate ) ){
+            return $this -> spec;
+        }
+        return null;
     }
 }

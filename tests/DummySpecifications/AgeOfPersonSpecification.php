@@ -6,6 +6,7 @@ class AgeOfPersonSpecification extends \Chalcedonyt\Specification\AbstractSpecif
 
     private $minAge;
     private $maxAge;
+
     /**
     * Set properties here for a parameterized specification.
     *
