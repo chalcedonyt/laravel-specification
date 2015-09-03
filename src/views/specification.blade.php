@@ -20,10 +20,10 @@ class {{ $classname }} extends AbstractSpecification
     /**
     * Tests an object and returns a boolean value
     *
-    * @var {{$object_class == Chalcedonyt\Specification\Commands\SpecificationGeneratorCommand::NO_CLASS_SPECIFIED ? 'mixed' : $object_class}}
+    * @var mixed
     */
 
-    public function isSatisfiedBy({{$object_class == Chalcedonyt\Specification\Commands\SpecificationGeneratorCommand::NO_CLASS_SPECIFIED  ? '' : $object_class}} {{$object_variable}})
+    public function isSatisfiedBy({{$object_variable}})
     {
         //return a boolean value
     }

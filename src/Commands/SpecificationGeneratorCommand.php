@@ -82,20 +82,7 @@ class SpecificationGeneratorCommand extends Command
             is_dir($directory) ?: $this->file->makeDirectory($directory, 0755, true);
 
             $create = true;
-            $object_class = $this->ask("[optional] What type should the candidate passed to isSatisfiedBy be? E.g. \App\User",
-                self::NO_CLASS_SPECIFIED );
-
             $object_variable = '$candidate';
-            if( $object_class != self::NO_CLASS_SPECIFIED ){
-                /**
-                 * Extract the last element of the class after "\", e.g. App\User -> $user    
-                 */
-                $derive_variable_name = function() use ($object_class){
-                    $parts = explode("\\", $object_class);
-                    return end( $parts );
-                };
-                $object_variable = '$'.strtolower( $derive_variable_name() );
-            }
             if ($this->file->exists("{$directory}/{$classname}.php")) {
                 if ($usrResponse = strtolower($this->ask("The file ['{$classname}'] already exists, overwrite? [y/n]",
                     null))
@@ -123,7 +110,6 @@ class SpecificationGeneratorCommand extends Command
             $view = $this->view->make('specification::specification',
                 ['namespace' => $namespace,
                 'classname' => $classname,
-                'object_class' => $object_class,
                 'object_variable' => $object_variable ]);
 
 

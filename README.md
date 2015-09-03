@@ -17,7 +17,7 @@ Chalcedonyt\Specification\Providers\SpecificationServiceProvider::class
 
 ## Usage
 
-An artisan command will be added to quickly create specifications. You may specify the type of object to be evaluated, e.g. `\App\Model`
+An artisan command will be added to quickly create specifications.
 ``` php
 php artisan make:specification [NameOfSpecification]
 ```
@@ -114,6 +114,7 @@ $this -> assertEquals( $inverse_female_spec -> isSatisfiedBy( $male ), true );
 ```
 ## Change log
 
+* 0.3 Removed functionality to type-hint the argument to isSatisfiedBy, as PHP doesn't allow overloading abstract methods.
 * 0.2 Added `remainderUnsatisfiedBy` functions
 
 ## Testing
