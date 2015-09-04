@@ -15,20 +15,70 @@ Then run `composer update`. Once composer is finished, add the service provider 
 Chalcedonyt\Specification\Providers\SpecificationServiceProvider::class
 ```
 
-## Usage
+## Generating Specifications
 
 An artisan command will be added to quickly create specifications.
 ``` php
 php artisan make:specification [NameOfSpecification]
 ```
+Adding a `--parameters` flag will prompts for parameters to be insert into the constructor when generated:
+```
+Enter the class or name for parameter 0 (Examples: \App\User or $value) [Blank to stop entering parameters] [(no_param)]:
+ > \App\User
 
-Examples
+ Enter the class or name for parameter 1 (Examples: \App\User or $value) [Blank to stop entering parameters] [(no_param)]:
+ > $value
+ ```
+ Results in
+
+ ```php
+ class NewSpecification extends AbstractSpecification
+ {
+
+     /**
+     * @var  \App\User
+     */
+     protected $user;
+
+     /**
+     * @var  
+     */
+     protected $value;
+
+
+     /**
+     *
+     *  @param  \App\User $user
+     *  @param   $value
+     *
+     */
+     public function __construct(\App\User $user, $value)
+     {
+         $this -> user = $user;
+         $this -> value = $value;
+     }
+
+     /**
+     * Tests an object and returns a boolean value
+     *
+     * @var  mixed
+     */
+
+     public function isSatisfiedBy($candidate)
+     {
+         //return a boolean value
+     }
+
+ }
+ ```
+
+## Usage
 ``` php
 class AgeOfPersonSpecification extends \Chalcedonyt\Specification\AbstractSpecification
 {
 
-    private $minAge;
-    private $maxAge;
+    protected $minAge;
+    protected $maxAge;
 
     /**
     * Set properties here for a parameterized specification.
@@ -53,6 +103,8 @@ class AgeOfPersonSpecification extends \Chalcedonyt\Specification\AbstractSpecif
 
 }
 ```
+
+
 
 ```php
 class MalePersonSpecification  extends \Chalcedonyt\Specification\AbstractSpecification
@@ -114,6 +166,7 @@ $this -> assertEquals( $inverse_female_spec -> isSatisfiedBy( $male ), true );
 ```
 ## Change log
 
+* 0.4 Updated console command. You may now specify constructor parameters for the specification generator  by entering the `--parameters` flag
 * 0.3 Removed functionality to type-hint the argument to isSatisfiedBy, as PHP doesn't allow overloading abstract methods.
 * 0.2 Added `remainderUnsatisfiedBy` functions
 

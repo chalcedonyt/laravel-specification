@@ -16,12 +16,13 @@ class SpecificationGeneratorCommand extends Command
 {
 
     const NO_CLASS_SPECIFIED = 'mixed';
+    const NO_PARAMETER_SPECIFIED = '(no_param)';
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'make:specification';
+    protected $signature = 'make:specification {classname} {--directory= : The directory to place the specification in} {--namespace= : The namespace for the specification} {--parameters : Whether to create a specification with parameters}';
 
     /**
      * The console command description.
@@ -71,7 +72,7 @@ class SpecificationGeneratorCommand extends Command
         try {
 
             // replace all space after ucwords
-            $classname = preg_replace('/\s+/', '', ucwords($this->argument('name')));
+            $classname = preg_replace('/\s+/', '', ucwords($this->argument('classname')));
 
 
             //retrieves store directory configuration
@@ -82,6 +83,50 @@ class SpecificationGeneratorCommand extends Command
             is_dir($directory) ?: $this->file->makeDirectory($directory, 0755, true);
 
             $create = true;
+            $parameters = collect([]);
+            $parameter_string = '';
+            /**
+             * if we are entering paramters
+             */
+            if( $this -> option('parameters')){
+
+                $i = 0;
+                while($parameter = $this -> ask("Enter the class or name for parameter ".($i++)." (Examples: \App\User or \$value) [Blank to stop entering parameters]", self::NO_PARAMETER_SPECIFIED)){
+                    if( $parameter == self::NO_PARAMETER_SPECIFIED )
+                        break;
+
+                    //if class starts with $, don't type hint
+                    if( strpos($parameter, '$') === 0 ){
+                        $parameter_class = null;
+                        $parameter_name = str_replace('$','',$parameter);
+                    } else{
+                        /**
+                         * Extract the last element of the class after "\", e.g. App\User -> $user
+                         */
+                        $derive_variable_name = function() use ($parameter){
+                            $parts = explode("\\", $parameter);
+                            return end( $parts );
+                        };
+                        $parameter_class = $parameter;
+                        $parameter_name = strtolower( $derive_variable_name() );
+                    }
+                    $parameters -> push(['class' => $parameter_class, 'name' => $parameter_name]);
+                }
+
+                if( $parameters -> count())
+                {
+                    $parameter_string_array = [];
+                    $parameters -> each(function( $p ) use( &$parameter_string_array){
+                        if( $p['class'])
+                            $parameter_string_array[]=$p['class'].' $'.$p['name'];
+                        else
+                            $parameter_string_array[]='$'.$p['name'];
+                    });
+                    $parameter_string = implode(', ', $parameter_string_array);
+                }
+            }
+
+
             $object_variable = '$candidate';
             if ($this->file->exists("{$directory}/{$classname}.php")) {
                 if ($usrResponse = strtolower($this->ask("The file ['{$classname}'] already exists, overwrite? [y/n]",
@@ -105,12 +150,14 @@ class SpecificationGeneratorCommand extends Command
                 }
 
             }
+            $args = ['namespace' => $namespace,
+            'classname' => $classname,
+            'parameter_string' => $parameter_string,
+            'parameters' => $parameters -> all(),
+            'object_variable' => $object_variable ];
 
             // loading template from views
-            $view = $this->view->make('specification::specification',
-                ['namespace' => $namespace,
-                'classname' => $classname,
-                'object_variable' => $object_variable ]);
+            $view = $this->view->make('specification::specification',$args);
 
 
             if ($create) {
