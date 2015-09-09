@@ -91,7 +91,7 @@ class SpecificationGeneratorCommand extends Command
             if( $this -> option('parameters')){
 
                 $i = 0;
-                while($parameter = $this -> ask("Enter the class or name for parameter ".($i++)." (Examples: \App\User or \$value) [Blank to stop entering parameters]", self::NO_PARAMETER_SPECIFIED)){
+                while($parameter = $this -> ask("Enter the class or variable name for parameter ".($i++)." (Examples: \App\User or \$user) [Blank to stop entering parameters]", self::NO_PARAMETER_SPECIFIED)){
                     if( $parameter == self::NO_PARAMETER_SPECIFIED )
                         break;
 

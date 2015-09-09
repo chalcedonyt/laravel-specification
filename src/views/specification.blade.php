@@ -13,8 +13,8 @@ class {{ $classname }} extends AbstractSpecification
     /**
     * @var {{$param['class']}}
     */
-    protected ${{$param['name']}};
-    
+    protected ${{camel_case($param['name'])}};
+
 @endforeach
 @endif
 
@@ -24,7 +24,7 @@ class {{ $classname }} extends AbstractSpecification
     * Set properties here for a parameterized specification.
 @else
 @foreach( $parameters as $param)
-    *  @param {{$param['class']}} ${{$param['name']}}
+    *  @param {{$param['class']}} ${{camel_case($param['name'])}}
 @endforeach
 @endif
     *
@@ -33,7 +33,7 @@ class {{ $classname }} extends AbstractSpecification
     {
 @if (count($parameters))
 @foreach( $parameters as $param)
-        $this -> {{$param['name']}} = ${{$param['name']}};
+        $this -> {{camel_case($param['name'])}} = ${{$param['name']}};
 @endforeach
 @endif
     }

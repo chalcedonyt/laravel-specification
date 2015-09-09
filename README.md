@@ -23,11 +23,11 @@ php artisan make:specification [NameOfSpecification]
 ```
 Adding a `--parameters` flag will prompts for parameters to be insert into the constructor when generated:
 ```
-Enter the class or name for parameter 0 (Examples: \App\User or $value) [Blank to stop entering parameters] [(no_param)]:
+Enter the class or variable name for parameter 0 (Examples: \App\User or $value) [Blank to stop entering parameters] [(no_param)]:
  > \App\User
 
- Enter the class or name for parameter 1 (Examples: \App\User or $value) [Blank to stop entering parameters] [(no_param)]:
- > $value
+ Enter the class or variable name for parameter 1 (Examples: \App\User or $value) [Blank to stop entering parameters] [(no_param)]:
+ > $my_value
  ```
  Results in
 
@@ -43,19 +43,19 @@ Enter the class or name for parameter 0 (Examples: \App\User or $value) [Blank t
      /**
      * @var  
      */
-     protected $value;
+     protected $myValue;
 
 
      /**
      *
      *  @param  \App\User $user
-     *  @param   $value
+     *  @param   $myValue
      *
      */
-     public function __construct(\App\User $user, $value)
+     public function __construct(\App\User $user, $my_value)
      {
          $this -> user = $user;
-         $this -> value = $value;
+         $this -> myValue = $my_value;
      }
 
      /**
@@ -166,6 +166,7 @@ $this -> assertEquals( $inverse_female_spec -> isSatisfiedBy( $male ), true );
 ```
 ## Change log
 
+* 0.4.1 Tweaked the generated views to use camel_case on any parameters.
 * 0.4 Updated console command. You may now specify constructor parameters for the specification generator  by entering the `--parameters` flag
 * 0.3 Removed functionality to type-hint the argument to isSatisfiedBy, as PHP doesn't allow overloading abstract methods.
 * 0.2 Added `remainderUnsatisfiedBy` functions
