@@ -23,7 +23,7 @@ class AgeOfPersonSpecification extends \Chalcedonyt\Specification\AbstractSpecif
     * @var Array $object
     */
 
-    public function isSatisfiedBy($object)
+    public function isSatisfiedBy( Array $object)
     {
         return $this -> minAge <= $object['age'] && $this -> maxAge >= $object['age'];
     }

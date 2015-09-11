@@ -3,16 +3,6 @@ namespace Chalcedonyt\Specification;
 
 interface SpecificationInterface
 {
-
-    /**
-     * Whether the object meets the specification
-     *
-     * @param mixed $candidate
-     *
-     * @return bool
-     */
-    public function isSatisfiedBy( $candidate );
-
     /**
      * Creates a logical AND specification
      *
