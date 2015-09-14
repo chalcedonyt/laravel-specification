@@ -27,7 +27,6 @@ class {{ $classname }} extends AbstractSpecification
     *  @param {{$param['class']}} ${{camel_case($param['name'])}}
 @endforeach
 @endif
-    *
     */
     public function __construct({{$parameter_string}})
     {
@@ -40,8 +39,8 @@ class {{ $classname }} extends AbstractSpecification
 
     /**
     * Tests an object and returns a boolean value
-    *
-    * @var mixed
+    * @param mixed
+    * @return Boolean
     */
 
     public function isSatisfiedBy({{$object_variable}})
