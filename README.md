@@ -166,6 +166,7 @@ $this -> assertEquals( $inverse_female_spec -> isSatisfiedBy( $male ), true );
 ```
 ## Change log
 
+* 0.4.4 You can now create a Specification inside a directory by specifying it in the classname, e.g. `php artisan make:specification MyDir\\MySpec`
 * 0.4.2 Removed the `isSatisfiedBy` method from the abstract and interface. This allows type hinting on the $candidate.
 * 0.4.1 Tweaked the generated views to use camel_case on any parameters.
 * 0.4 Updated console command. You may now specify constructor parameters for the specification generator  by entering the `--parameters` flag
