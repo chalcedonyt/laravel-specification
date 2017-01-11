@@ -7,6 +7,13 @@ namespace Chalcedonyt\Specification;
 abstract class AbstractSpecification implements SpecificationInterface
 {
     /**
+     * Tests an object and returns a boolean value
+     *
+     * @var mixed candidate
+     */
+    abstract protected function isSatisfiedBy($candidate);
+
+    /**
      * Returns the specifications the candidate does not fulfil
      *
      * @param mixed $candidate
