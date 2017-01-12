@@ -54,8 +54,8 @@ Enter the class or variable name for parameter 0 (Examples: \App\User or $value)
      */
      public function __construct(\App\User $user, $my_value)
      {
-         $this -> user = $user;
-         $this -> myValue = $my_value;
+         $this->user = $user;
+         $this->myValue = $my_value;
      }
 
      /**
@@ -86,8 +86,8 @@ class AgeOfPersonSpecification extends \Chalcedonyt\Specification\AbstractSpecif
     */
     public function __construct($min_age, $max_age)
     {
-        $this -> minAge = $min_age;
-        $this -> maxAge = $max_age;
+        $this->minAge = $min_age;
+        $this->maxAge = $max_age;
     }
 
     /**
@@ -98,7 +98,7 @@ class AgeOfPersonSpecification extends \Chalcedonyt\Specification\AbstractSpecif
 
     public function isSatisfiedBy($candidate)
     {
-        return $this -> minAge <= $candidate['age'] && $this -> maxAge >= $candidate['age'];
+        return $this->minAge <= $candidate['age'] && $this->maxAge >= $candidate['age'];
     }
 
 }
@@ -137,13 +137,13 @@ $young_teenage_female = ['age' => 13, 'gender' => MalePersonSpecification::GENDE
 $teenage_female = ['age' => 15, 'gender' => MalePersonSpecification::GENDER_FEMALE ];
 $adult_female = ['age' => 22, 'gender' => MalePersonSpecification::GENDER_FEMALE ];
 
-$nested_female_spec =  $puberty_spec -> andSpec( $teenager_spec -> andSpec( $female_spec ) );
-$this -> assertEquals( $nested_female_spec -> isSatisfiedBy( $teenage_female ), true );
-$this -> assertEquals( $nested_female_spec -> isSatisfiedBy( $young_teenage_female ), false );
+$nested_female_spec =  $puberty_spec->andSpec( $teenager_spec->andSpec( $female_spec ) );
+$this->assertEquals( $nested_female_spec->isSatisfiedBy( $teenage_female ), true );
+$this->assertEquals( $nested_female_spec->isSatisfiedBy( $young_teenage_female ), false );
 
-$any_young_female_spec = $female_spec -> andSpec( $teenager_spec -> orSpec( $puberty_spec ));
-$this -> assertEquals( $nested_female_spec -> isSatisfiedBy( $teenage_female ), true );
-$this -> assertEquals( $nested_female_spec -> isSatisfiedBy( $adult_female ), false );
+$any_young_female_spec = $female_spec->andSpec( $teenager_spec->orSpec( $puberty_spec ));
+$this->assertEquals( $nested_female_spec->isSatisfiedBy( $teenage_female ), true );
+$this->assertEquals( $nested_female_spec->isSatisfiedBy( $adult_female ), false );
 ```
 
 You may also retrieve unfulfilled specifications via the `remainderUnsatisfiedBy` property
@@ -157,12 +157,12 @@ $female_spec = new NotSpec($male_spec);
 $male = ['age' => 16, 'gender' => MalePersonSpecification::GENDER_MALE ];
 
 $any_young_female_spec = new AndSpec( $female_spec, $any_age_spec );
-$this -> assertEquals( $any_young_female_spec -> isSatisfiedBy( $male ), false );
+$this->assertEquals( $any_young_female_spec->isSatisfiedBy( $male ), false );
 
 //returns the $female_spec
-$unfulfilled_spec =  $any_young_female_spec -> remainderUnsatisfiedBy( $male );
+$unfulfilled_spec =  $any_young_female_spec->remainderUnsatisfiedBy( $male );
 $inverse_female_spec = new NotSpec( $unfulfilled_spec );
-$this -> assertEquals( $inverse_female_spec -> isSatisfiedBy( $male ), true );
+$this->assertEquals( $inverse_female_spec->isSatisfiedBy( $male ), true );
 ```
 ## Change log
 
