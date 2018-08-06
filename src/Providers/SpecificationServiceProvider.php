@@ -30,7 +30,7 @@ class SpecificationServiceProvider extends ServiceProvider
 
         // register our command here
 
-        $this->app['command.specification.generate'] = $this->app->share(
+        $this->app->singleton('command.specification.generate',
             function ($app) {
                 return new SpecificationGeneratorCommand($app['config'], $app['view'], $app['files']);
             }
